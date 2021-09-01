@@ -16,7 +16,7 @@ body {
 	margin: 0 auto;
 }
 .header {
-	background: #EEDCCB;
+	background: #D1EDE9;
 	text-align: center;
 	margin: 0px;
 	padding: 5;
@@ -35,7 +35,7 @@ body {
 	text-align: center;
 }
 .content {
-	background: #D1EDE9;
+	background: #EEDCCB;
 	margin: 0px;
 	float: left;
 	width: 100%;
