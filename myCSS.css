@@ -9,7 +9,7 @@ body {
      	color: #000;
 }
 .homePage {
-	background: #222222;
+	background: #D1EDE9;
 }
 .container {
 	width: 960px;
@@ -35,7 +35,7 @@ body {
 	text-align: center;
 }
 .content {
-	background: #EEDCCB;
+	background: #f0f5f5;
 	margin: 0px;
 	float: left;
 	width: 100%;
