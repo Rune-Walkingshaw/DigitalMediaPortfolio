@@ -1,49 +1,68 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-	<head>
-		<title>ballBounce1</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<style type="text/css" media="screen">
-		html, body { height:100%; background-color: #ffffff;}
-		body { margin:0; padding:0; overflow:hidden; }
-		#flashContent { width:100%; height:100%; }
-		</style>
-	</head>
-	<body>
-		<div id="flashContent">
-			<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="640" height="480" id="ballBounce1" align="middle">
-				<param name="movie" value="ballBounce1.swf" />
-				<param name="quality" value="high" />
-				<param name="bgcolor" value="#ffffff" />
-				<param name="play" value="true" />
-				<param name="loop" value="true" />
-				<param name="wmode" value="window" />
-				<param name="scale" value="showall" />
-				<param name="menu" value="true" />
-				<param name="devicefont" value="false" />
-				<param name="salign" value="" />
-				<param name="allowScriptAccess" value="sameDomain" />
-				<!--[if !IE]>-->
-				<object type="application/x-shockwave-flash" data="ballBounce1.swf" width="640" height="480">
-					<param name="movie" value="ballBounce1.swf" />
-					<param name="quality" value="high" />
-					<param name="bgcolor" value="#ffffff" />
-					<param name="play" value="true" />
-					<param name="loop" value="true" />
-					<param name="wmode" value="window" />
-					<param name="scale" value="showall" />
-					<param name="menu" value="true" />
-					<param name="devicefont" value="false" />
-					<param name="salign" value="" />
-					<param name="allowScriptAccess" value="sameDomain" />
-				<!--<![endif]-->
-					<a href="http://www.adobe.com/go/getflash">
-						<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
-					</a>
-				<!--[if !IE]>-->
-				</object>
-				<!--<![endif]-->
-			</object>
+<!DOCTYPE html>
+<!--
+	NOTES:
+	1. All tokens are represented by '$' sign in the template.
+	2. You can write your code only wherever mentioned.
+	3. All occurrences of existing tokens will be replaced by their appropriate values.
+	4. Blank lines will be removed automatically.
+	5. Remove unnecessary comments before creating your template.
+-->
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="authoring-tool" content="Adobe_Animate_CC">
+<title>ballBounce1_HTML5 Canvas</title>
+<!-- write your code here -->
+<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+<script src="ballBounce1_HTML5 Canvas.js"></script>
+<script>
+var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
+function init() {
+	canvas = document.getElementById("canvas");
+	anim_container = document.getElementById("animation_container");
+	dom_overlay_container = document.getElementById("dom_overlay_container");
+	var comp=AdobeAn.getComposition("A8A16531FB4F40FC96B0C9FA092A776B");
+	var lib=comp.getLibrary();
+	var loader = new createjs.LoadQueue(false);
+	loader.addEventListener("fileload", function(evt){handleFileLoad(evt,comp)});
+	loader.addEventListener("complete", function(evt){handleComplete(evt,comp)});
+	var lib=comp.getLibrary();
+	loader.loadManifest(lib.properties.manifest);
+}
+function handleFileLoad(evt, comp) {
+	var images=comp.getImages();	
+	if (evt && (evt.item.type == "image")) { images[evt.item.id] = evt.result; }	
+}
+function handleComplete(evt,comp) {
+	//This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
+	var lib=comp.getLibrary();
+	var ss=comp.getSpriteSheet();
+	var queue = evt.target;
+	var ssMetadata = lib.ssMetadata;
+	for(i=0; i<ssMetadata.length; i++) {
+		ss[ssMetadata[i].name] = new createjs.SpriteSheet( {"images": [queue.getResult(ssMetadata[i].name)], "frames": ssMetadata[i].frames} )
+	}
+	exportRoot = new lib.ballBounce1_HTML5Canvas();
+	stage = new lib.Stage(canvas);	
+	//Registers the "tick" event listener.
+	fnStartAnimation = function() {
+		stage.addChild(exportRoot);
+		createjs.Ticker.framerate = lib.properties.fps;
+		createjs.Ticker.addEventListener("tick", stage);
+	}	    
+	//Code to support hidpi screens and responsive scaling.
+	AdobeAn.makeResponsive(false,'both',false,1,[canvas,anim_container,dom_overlay_container]);	
+	AdobeAn.compositionLoaded(lib.properties.id);
+	fnStartAnimation();
+}
+</script>
+<!-- write your code here -->
+</head>
+<body onload="init();" style="margin:0px;">
+	<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:640px; height:480px">
+		<canvas id="canvas" width="640" height="480" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
+		<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:640px; height:480px; position: absolute; left: 0px; top: 0px; display: block;">
 		</div>
-	</body>
+	</div>
+</body>
 </html>
